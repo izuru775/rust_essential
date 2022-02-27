@@ -11,6 +11,7 @@
 */
 
 use std::fs;
+use std::io::prelude::*;
 
 fn main() {
     let mut speech = String::new();
@@ -20,4 +21,8 @@ fn main() {
     speech.push_str("but because they are hard.\n");
 
     fs::write("speech.txt",speech);
+
+    let mut file = fs::OpenOptions::new().append(true).open("speech.txt").unwrap();
+
+    file.write(b"Some BS");
 }
