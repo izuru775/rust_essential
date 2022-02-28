@@ -11,18 +11,24 @@
 */
 
 use std::fs;
-use std::io::prelude::*;
+use std::env;
 
 fn main() {
-    let mut speech = String::new();
-    speech.push_str("We choose to go to the Moon in this decade\n");
-    speech.push_str("and do other things,\n");
-    speech.push_str("not because they are easy,\n");
-    speech.push_str("but because they are hard.\n");
 
-    fs::write("speech.txt",speech);
+    if env::args().len() <= 2 {
+        eprintln!("Program Require two arguments: <file Path> <search name>");
+        std::process::exit(1);
+    }
+    let  file_name = env::args().nth(1).unwrap();
+    let  walker_name = env::args().nth(2).unwrap();
 
-    let mut file = fs::OpenOptions::new().append(true).open("speech.txt").unwrap();
+    for lines in fs::read_to_string(file_name).unwrap().lines(){
+        if lines == walker_name{
+            println!("{} did walk on the Moon!",walker_name);
+            return;
+        }
+    }
 
-    file.write(b"Some BS");
+    println!("{} did NOT walk on the Moon....YET!",walker_name);
+       
 }
