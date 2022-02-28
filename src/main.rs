@@ -19,11 +19,13 @@ impl Rectangle{
         self.width * self.height
     }
 
-    fn scale(&self,scale:f64){
+    fn scale(&mut self,scale:f64){
         self.width =  self.width *scale;
-
+        self.height =  self.height *scale;
     }
 }
+
+
 
 fn main() {
 
