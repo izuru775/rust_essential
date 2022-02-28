@@ -23,7 +23,7 @@ impl Rectangle{
         self.widht =  self.widht *scale;
         self.height =  self.height *scale;
     }
-    fn new(widht, height){
+    fn new(widht:&f64, height:&f64) -> Rectangle{
         
     }
 }
