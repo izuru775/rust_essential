@@ -26,15 +26,21 @@ impl Shuttle{
     fn add_fuel(&mut self,gallons:f64){
         self.propellant+=gallons;
     }
+
+    fn new(name:&str)->Shuttle{
+        Shuttle{
+            name:String::from(name),
+            crew_size:7,
+            propellant:0.0
+        }
+    }
 }
 
 fn main() {
 
-    let mut vehicle = Shuttle{
-        name:String::from("Endeavour"),
-        crew_size:8,
-        propellant:0.0
-    };
+    let mut vehicle = Shuttle::new("Endeavour");
+    let mut vehicle2 = Shuttle::new("Discovery");
+
 
     let hehicle_name = vehicle.get_name();
     println!("vehicle name is {}",hehicle_name);
