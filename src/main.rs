@@ -14,8 +14,15 @@ struct Rectangle{
     width:f64,
     height:f64
 }
-impl fn get_area(){
-    
+impl Rectangle{
+    fn get_area(&self)->f64{
+        self.width * self.height
+    }
+
+    fn scale(&self,scale:f64){
+        self.width =  self.width *scale;
+
+    }
 }
 
 fn main() {
