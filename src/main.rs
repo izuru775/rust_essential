@@ -1,34 +1,46 @@
-// Variables in rust are immutable by default
+struct Satellite{
+    name:String,
+    velocity:f64 // miles per second
+}
 
-/*
-    Local variables : snake_case
-    Modules : snake_case
-    Types : UpperCamelCase
-    Traits : UpperCamelCase
-    Enum variants : UpperCamelCase
-    functions : snake_case
-    Methods : snake_case
-*/
+struct SpaceStation{
+    name:String,
+    crew_size:u8,
+    altitude:u32 // miles
+}
+// Trait structure
+trait Description{
+    fn describe(&self)->String;
+}
 
-// Boxes are smart pointers which points to a memory location in the heap
+// Implementing trait to Satellite struct
+impl Description for Satellite{
+    fn describe(&self)->String{
+        format!("The {} is flying at {} miles per second",self.name,self.velocity)
+    }
+}
 
-
-fn sum_boxes<T: std::ops::Add<Output = T>>(a:Box<T>,b:Box<T>)->Box<T>{
-    Box::new(*a + *b)
+// Implementing trait to SpaceStation struct
+impl Description for SpaceStation{
+    fn describe(&self)->String{
+        format!("The {} is flying {} miles hight with {} crew members on board!",self.name,self.altitude,self.crew_size)
+    }
 }
 
 
-
 fn main() {
+    let hubble = Satellite{
+        name:String::from("Hubble Telescope"),
+        velocity:4.72
+    };
+
+    let iss = SpaceStation{
+        name:String::from("International Space Station"),
+        crew_size:6,
+        altitude:254
+    };
+
+    println!("hubble is : {}",hubble.describe());
+    println!("iss is : {}",iss.describe());
     
-    let one = Box::new(1);
-    let two = Box::new(2);
-
-    assert_eq!(*sum_boxes(one, two),3);
-
-    let pi = Box::new(3.14159);
-    let e = Box::new(2.71828);
-    assert_eq!(*sum_boxes(pi, e),5.85987);
-
-    println!("Test Passed!");
 }
