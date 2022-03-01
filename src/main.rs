@@ -10,14 +10,16 @@ struct SpaceStation{
 }
 // Trait structure
 trait Description{
-    fn describe(&self)->String;
+    fn describe(&self)->String{
+        String::from("an object flying through space!")
+    }
 }
 
 // Implementing trait to Satellite struct
 impl Description for Satellite{
-    fn describe(&self)->String{
-        format!("The {} is flying at {} miles per second",self.name,self.velocity)
-    }
+    // fn describe(&self)->String{
+    //     format!("The {} is flying at {} miles per second",self.name,self.velocity)
+    // }
 }
 
 // Implementing trait to SpaceStation struct
