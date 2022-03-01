@@ -9,28 +9,26 @@
     functions : snake_case
     Methods : snake_case
 */
-use std::mem;
 
-struct Shuttle{
-    name:String,
-    crew_size:u8,
-    propellant:f64
+// Boxes are smart pointers which points to a memory location in the heap
+
+
+fn sum_boxes<T: std::ops::Add<Output = T>>(a:Box<T>,b:Box<T>)->Box<T>{
+    Box::new(*a + *b)
 }
 
+
+
 fn main() {
-    let vehicle =Shuttle{
-        name:String::from("Atlantis"),
-        crew_size:7,
-        propellant:835958.0
-    };
+    
+    let one = Box::new(1);
+    let two = Box::new(2);
 
-    println!("vehicle size on stack : {} bytes",mem:: size_of_val(&vehicle));
+    assert_eq!(*sum_boxes(one, two),3);
 
-    let boxed_vehicle:Box<Shuttle> = Box::new(vehicle);
-    println!("boxed_vehicle size on stack : {} bytes",mem:: size_of_val(&boxed_vehicle));
-    println!("boxed_vehicle size on heap : {} bytes",mem:: size_of_val(&*boxed_vehicle));
+    let pi = Box::new(3.14159);
+    let e = Box::new(2.71828);
+    assert_eq!(*sum_boxes(pi, e),5.85987);
 
-    let unboxed_vehicle:Shuttle = *boxed_vehicle;
-    println!("unboxed_vehicle size on stack : {} bytes",mem:: size_of_val(&unboxed_vehicle));
-
+    println!("Test Passed!");
 }
