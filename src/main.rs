@@ -15,5 +15,5 @@ where
 
 fn main() {
     compare_and_print(1.0, 1);
-    compare_and_print(1.1, "one");
+    compare_and_print(1.1, 1);
 }
