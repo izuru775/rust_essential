@@ -1,18 +1,16 @@
-#[derive(Debug)]
-enum Shape{
-    Circle(f64),
-    Rectangle(f64,f64),
-    Triangle(f64,f64,f64)
-}
-
 fn main() {
-    let my_shape = Shape::Rectangle(1.2,3.4);
-    println!("my_shape is {:?}",my_shape);
+    let my_number = 10u8;
 
-    match my_shape{
-        Shape::Circle(r)=>println!("Circle with a radius {}",r),
-        Shape::Rectangle(w,h)=>println!("{} x {} Rectangle",w,h),
-        Shape::Triangle(a,b,c)=>println!("Triangle with sides {},{},{}",a,b,c)
-    }
+    let result = match my_number{
+        0 =>"zero",
+        1 =>"one",
+        2 =>"two",
+        3 =>"three",
+        _ =>{
+            println!("{} did not match",my_number);
+            "something else"
+        } 
+    };
+    println!("result is {}", result);
 
 }
