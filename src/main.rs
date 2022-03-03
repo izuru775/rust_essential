@@ -1,6 +1,15 @@
 use std::fs;
+use std::io;
 
 fn main() {
-    let content = fs::read_to_string("the_ultimate_question.txt").expect("Nobody knows it!");
+    let result = fs::read_to_string("the_ultimate_question.txt");
+    let content = match result{
+        Ok(message) => message,
+        Err(error) => match error.kind(){
+            io::ErrorKind::NotFound => String::from("File not found."),
+            io::ErrorKind::PermissionDenied => String::from("Permission denied"),
+            _=> panic!("Another type of error: {:?}",error)
+        }
+    };
     println!("content is: {:?}",content);
 }
