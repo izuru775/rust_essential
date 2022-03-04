@@ -1,22 +1,34 @@
-use std::fs;
 use std::io;
-
-fn read_and_combine(f1:&str,f2:&str)->Result<String,io::Error>{
-    let mut s1 = fs::read_to_string(f1)?;
-    let s2 = match fs::read_to_string(f2){
-        Ok(s) =>s,
-        Err(e)=> return Err(e)
-    };
-    s1.push('\n');
-    s1.push_str(&s2);
-    Ok(s1)
-
-}
+use rand::prelude::*;
 
 fn main() {
-    let result = read_and_combine("planet.txt", "dwarf_planets.txt");
-    match result{
-        Ok(s)=>println!("result is ...\n{}",s),
-        Err(e)=>println!("there was an error: {}",e)
-    }
+    let secret_number = rand::thread_rng().gen_range(1..101);
+
+    println!("I'm thinking of a number between 1 and 100...");
+    println!("Guess the number:");
+    loop {
+        let mut buffer = String::new();
+        let guess = match  io::stdin().read_line(&mut buffer){
+            Ok(_)=> match buffer.trim().parse::<u32>(){ // _ is the wild card
+                Ok(val)=>val,
+                Err(_)=>{
+                    println!("\nFailed to parse input. Guess again:");
+                    continue // continue keyword terminates the loop and starts from the begining
+                }
+            }
+            Err(_)=>{
+                println!("\nFailed to read input. Guess again:");
+                continue
+            }
+        };        
+
+        if guess > secret_number {
+            println!("\n{} is too high! Guess lower:", guess);
+        } else if guess < secret_number {
+            println!("\n{} is too low! Guess higher:", guess);
+        } else {
+            println!("\nYou got it! The secret number was {}.", secret_number);
+            break;
+        }
+    }    
 }
