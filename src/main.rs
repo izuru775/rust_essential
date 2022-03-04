@@ -1,34 +1,16 @@
-use std::io;
-use rand::prelude::*;
-
 fn main() {
-    let secret_number = rand::thread_rng().gen_range(1..101);
+    let mut astronauts:Vec<String> = Vec::new();
+    astronauts.push(String::from("Shepard")); // Alan Shepard
+    astronauts.push(String::from("Grissom")); // Gus Grissom
+    astronauts.push(String::from("Glenn")); // John Glenn
+    println!("astronauts is {:?}",astronauts);
 
-    println!("I'm thinking of a number between 1 and 100...");
-    println!("Guess the number:");
-    loop {
-        let mut buffer = String::new();
-        let guess = match  io::stdin().read_line(&mut buffer){
-            Ok(_)=> match buffer.trim().parse::<u32>(){ // _ is the wild card
-                Ok(val)=>val,
-                Err(_)=>{
-                    println!("\nFailed to parse input. Guess again:");
-                    continue // continue keyword terminates the loop and starts from the begining
-                }
-            }
-            Err(_)=>{
-                println!("\nFailed to read input. Guess again:");
-                continue
-            }
-        };        
+    let last = astronauts.pop();
+    println!("last is {:?}",last);
 
-        if guess > secret_number {
-            println!("\n{} is too high! Guess lower:", guess);
-        } else if guess < secret_number {
-            println!("\n{} is too low! Guess higher:", guess);
-        } else {
-            println!("\nYou got it! The secret number was {}.", secret_number);
-            break;
-        }
-    }    
+    // let third = &astronauts[2];
+    let third = &astronauts.get(2);
+    println!("third is {:?}",third);
+
+    let countdown = vec![5,4,3,2,1];
 }
