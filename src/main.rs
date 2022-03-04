@@ -10,6 +10,6 @@ fn main() {
             io::ErrorKind::PermissionDenied => String::from("Permission denied"),
             _=> panic!("Another type of error: {:?}",error)
         }
-    };
+    }; 
     println!("content is: {:?}",content);
 }
