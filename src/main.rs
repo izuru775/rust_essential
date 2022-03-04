@@ -1,16 +1,16 @@
+use std::collections::HashMap;
+
 fn main() {
-    let mut astronauts:Vec<String> = Vec::new();
-    astronauts.push(String::from("Shepard")); // Alan Shepard
-    astronauts.push(String::from("Grissom")); // Gus Grissom
-    astronauts.push(String::from("Glenn")); // John Glenn
-    println!("astronauts is {:?}",astronauts);
+    let mut mission_flown = HashMap::new();
+    mission_flown.insert("Hadfield",3);
+    mission_flown.insert("Hurley", 3);
+    mission_flown.insert("Barron", 0);
+    mission_flown.insert("Barron", 1);
+    mission_flown.entry("Sodi").or_insert(2);
+    let kyla = mission_flown.entry("Barron").or_insert(0);
+    *kyla+=1;
+    println!("mission_flown is {:?}", mission_flown);
 
-    let last = astronauts.pop();
-    println!("last is {:?}",last);
-
-    // let third = &astronauts[2];
-    let third = &astronauts.get(2);
-    println!("third is {:?}",third);
-
-    let countdown = vec![5,4,3,2,1];
+    let barron_mission = mission_flown.get("Barron");
+    println!("barron_mission is {:?}",barron_mission);
 }
