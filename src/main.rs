@@ -1,16 +1,48 @@
+use std::fs;
+use std::env;
 use std::collections::HashMap;
 
 fn main() {
-    let mut mission_flown = HashMap::new();
-    mission_flown.insert("Hadfield",3);
-    mission_flown.insert("Hurley", 3);
-    mission_flown.insert("Barron", 0);
-    mission_flown.insert("Barron", 1);
-    mission_flown.entry("Sodi").or_insert(2);
-    let kyla = mission_flown.entry("Barron").or_insert(0);
-    *kyla+=1;
-    println!("mission_flown is {:?}", mission_flown);
+    // read file amd build vector of individual words
+    let content = match env::args().nth(1){
+        Some(f)=>match fs::read_to_string(f){
+            Ok(s)=>s.to_lowercase(),
+            Err(e)=>{
+                eprintln!("could NOT read file : {}",e);
+                std::process::exit(1);
+            }
+        },
+        None=>{
+            eprintln!("programge require an argument: <file path>");
+            std::process::exit(2);
+        }
+    };
+    
+    let all_words = content.split_whitespace().collect::<Vec<&str>>();
 
-    let barron_mission = mission_flown.get("Barron");
-    println!("barron_mission is {:?}",barron_mission);
+    // count how many times each unique word occurs
+    let mut word_counts:HashMap<&str,u32> = HashMap::new();
+    for word in all_words.iter() {
+        *word_counts.entry(word).or_insert(0)+=1;
+    }
+    
+    // determine the most commonly used word(s)
+    let mut top_count =0u32;
+    let mut top_words:Vec<&str> = Vec::new();
+
+    for(&key,&val) in word_counts.iter(){
+        if val > top_count{
+            top_count = val;
+            top_words.clear();
+            top_words.push(key);
+        }else if val == top_count{
+            top_words.push(key);
+        }
+    }
+
+    // display result
+    println!("Top word(s) occurred {} times :",top_count);
+    for word in top_words.iter() {
+        println!("{}",word);
+    }
 }
